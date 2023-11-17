@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@meta2d/core": "^1.0.34",
+    "@tweenjs/tween.js": "^21.0.0",
     "antd": "^5.11.1",
     "less": "^4.2.0",
     "less-loader": "^11.1.3",
@@ -21,6 +22,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.18.0",
     "three": "^0.158.0",
+    "three-csg-ts": "^3.1.13",
     "three-tween": "^1.0.0",
     "zustand": "^4.4.6"
   },
