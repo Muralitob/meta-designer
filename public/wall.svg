@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon-机房地图图标-墙</title>
+    <g id="icon-机房地图图标-墙" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="矩形" fill="#FFFFFF" x="0" y="0" width="36" height="36" rx="4"></rect>
+        <path d="M32,0 C34.209139,0 36,1.790861 36,4 L36,32 C36,34.209139 34.209139,36 32,36 L4,36 C1.790861,36 0,34.209139 0,32 L0,4 C0,1.790861 1.790861,0 4,0 L32,0 Z M32,1 L4,1 C2.34314575,1 1,2.34314575 1,4 L1,32 C1,33.6568542 2.34314575,35 4,35 L32,35 C33.6568542,35 35,33.6568542 35,32 L35,4 C35,2.34314575 33.6568542,1 32,1 Z" id="矩形" fill="#475A63" fill-rule="nonzero"></path>
+        <g id="编组-4" transform="translate(2.500000, 3.500000)" fill="#475A63">
+            <g id="编组-3备份-2" transform="translate(0.000000, 20.000000)">
+                <g id="编组">
+                    <rect id="形状结合备份-2" x="0" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-3" x="8" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-4" x="16" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-5" x="24" y="0" width="7" height="4" rx="1"></rect>
+                </g>
+                <g id="编组-2" transform="translate(0.000000, 5.000000)">
+                    <rect id="形状结合备份-8" x="20" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-9" x="27.5" y="0" width="3.5" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-10" x="0" y="0" width="3" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-7" x="12" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-6" x="4" y="0" width="7" height="4" rx="1"></rect>
+                </g>
+            </g>
+            <g id="编组-3备份" transform="translate(0.000000, 10.000000)">
+                <g id="编组">
+                    <rect id="形状结合备份-2" x="0" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-3" x="8" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-4" x="16" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-5" x="24" y="0" width="7" height="4" rx="1"></rect>
+                </g>
+                <g id="编组-2" transform="translate(0.000000, 5.000000)">
+                    <rect id="形状结合备份-8" x="20" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-9" x="27.5" y="0" width="3.5" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-10" x="0" y="0" width="3" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-7" x="12" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-6" x="4" y="0" width="7" height="4" rx="1"></rect>
+                </g>
+            </g>
+            <g id="编组-3">
+                <g id="编组">
+                    <rect id="形状结合备份-2" x="0" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-3" x="8" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-4" x="16" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-5" x="24" y="0" width="7" height="4" rx="1"></rect>
+                </g>
+                <g id="编组-2" transform="translate(0.000000, 5.000000)">
+                    <rect id="形状结合备份-8" x="20" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-9" x="27.5" y="0" width="3.5" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-10" x="0" y="0" width="3" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-7" x="12" y="0" width="7" height="4" rx="1"></rect>
+                    <rect id="形状结合备份-6" x="4" y="0" width="7" height="4" rx="1"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

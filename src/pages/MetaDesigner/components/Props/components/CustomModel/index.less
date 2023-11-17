@@ -1,0 +1,55 @@
+.box-3d {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  background-color: skyblue;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  /* 在父元素中添加透视效果 */
+  /* perspective: 200px; */
+  /* 在父元素中添加transform-style启用3d空间 */
+  transform-style: preserve-3d;
+
+  .item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+  }
+
+  .top {
+    background-color: rgba(255, 0, 0, 0.4);
+    transform: rotateX(90deg) translateZ(50px);
+  }
+
+  .bottom {
+    background-color: rgba(0, 255, 0, 0.4);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+    transform: rotateX(-90deg) translateZ(50px);
+  }
+
+  .front {
+    background-color: rgba(100, 100, 100, 0.4);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+    transform: rotateY(0deg) translateZ(50px);
+  }
+
+  .back {
+    background-color: rgba(100, 100, 100, 0.4);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+    transform: rotateY(-180deg) translateZ(50px);
+  }
+
+  .left {
+    background-color: rgba(255, 255, 0, 0.4);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+    transform: rotateY(-90deg) translateZ(50px);
+  }
+
+  .right {
+    background-color: rgba(255, 255, 0, 0.4);
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+    transform: rotateY(90deg) translateZ(50px);
+  }
+}
