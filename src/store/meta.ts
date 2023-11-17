@@ -9,7 +9,6 @@ export const useMetaStore = create<useMetaState>((set) => ({
   customSkinSet: {},
   setSkin: (itemType: string, data: string[]) => {
     set((state) => {
-      console.log('itemTypeitemType', itemType, data);
       return {
         customSkinSet: {
           ...state.customSkinSet,

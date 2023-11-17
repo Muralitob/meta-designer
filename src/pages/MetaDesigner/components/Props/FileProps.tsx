@@ -23,7 +23,6 @@ export default () => {
     if (meta2d) {
       meta2d.setOptions(options)
       meta2d.store.patchFlagsTop = true
-      meta2d.store.patchFlagsBackground = true
       meta2d.render()
     }
   }, [options, window.meta2d])

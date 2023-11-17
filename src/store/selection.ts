@@ -1,4 +1,4 @@
-import { Pen } from '@meta2d/core';
+import { MetaPen } from '@/pages/MetaDesigner';
 import { create } from 'zustand';
 
 export enum SelectionMode {
@@ -6,17 +6,25 @@ export enum SelectionMode {
   Pen,
 }
 
-export const useSelections = create((set) => ({
+interface useSelectionState {
+  selections: {
+    mode: SelectionMode
+    pen: MetaPen | null
+  }
+  select: (pens?: MetaPen[]) => void;
+}
+
+export const useSelections = create<useSelectionState>((set) => ({
   selections: {
     mode: SelectionMode.File,
     pen: null,
   },
-  select: (pens?: Pen[]) => {
+  select: (pens?: MetaPen[]) => {
     if (!pens || pens.length !== 1) {
       set({
         selections: {
           mode: SelectionMode.File,
-          pen: undefined,
+          pen: null,
         },
       });
       return;

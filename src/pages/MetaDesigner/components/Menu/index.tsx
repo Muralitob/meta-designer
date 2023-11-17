@@ -6,11 +6,14 @@ import { ItemType } from 'rc-menu/lib/interface';
 interface MetaMenuProps extends PropsWithChildren<DropDownProps> {
   actived: Pen[];
   setActived: (p: Pen[]) => void;
-  undoStatus: boolean;
 }
 
 function MetaMenu(props: MetaMenuProps) {
-  const { undoStatus, actived, setActived, ...restProps } = props;
+  const { actived, setActived, ...restProps } = props;
+  const meta = window.meta2d??{store: {
+    histories: [],
+    historyIndex: -1,
+  }}
   const renderMenus = useMemo(() => {
     let items: MenuProps['items'] = [
       {
@@ -83,6 +86,7 @@ function MetaMenu(props: MetaMenuProps) {
             <span>Ctrl + Z</span>
           </div>
         ),
+        disabled: !(meta.store.historyIndex! > -1),
         key: 'undo',
       },
       {
@@ -93,7 +97,7 @@ function MetaMenu(props: MetaMenuProps) {
           </div>
         ),
         key: 'redo',
-        disabled: !undoStatus,
+        disabled: !(meta.store.histories!.length > meta.store.historyIndex! + 1),
       },
       {
         type: 'divider',
@@ -129,11 +133,17 @@ function MetaMenu(props: MetaMenuProps) {
       },
     ];
     return items;
-  }, [props.actived, props.undoStatus]);
+  }, [props.actived]);
   const onClick: MenuProps['onClick'] = ({ key }) => {
     const meta2d = window.meta2d;
     if (key == 'delete') {
-      console.log('actived', actived);
+      //删除节点同时删除连接线
+      if (actived && actived[0].connectedLines) {
+        const lines: Pen[] = actived[0].connectedLines.map((line) => {
+          return meta2d.findOne(line.lineId)!;
+        });
+        meta2d.delete(lines);
+      }
       meta2d.delete(actived);
     }
     if (key == 'lock') {
