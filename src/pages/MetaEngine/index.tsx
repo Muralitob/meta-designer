@@ -43,7 +43,6 @@ import { CSS3DObject, CSS3DRenderer } from "three/examples/jsm/renderers/CSS3DRe
 import { FXAAShader } from "three/examples/jsm/shaders/FXAAShader.js"
 import { createLabel, labelRenderer as css2LabelRenderer } from "./utils/tag2D"
 import {
-  createCabinetURulter,
   labelRenderer as css3LabelRenderer,
 } from "./utils/tag3D"
 import { Pen3D, transformCustomSkinData } from "./utils/transform"
@@ -759,7 +758,6 @@ class MetaEngine {
       side: DoubleSide, //双面可见
     })
     var RulterMesh = new Mesh(RulerGeometry, RulerMaterial)
-    let ruler = createCabinetURulter()
     RulterMesh.position.z = pz + d / 2
     RulterMesh.position.x = px - 0.5
     RulterMesh.position.y = py + 0.05
