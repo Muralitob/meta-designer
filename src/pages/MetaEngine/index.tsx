@@ -56,6 +56,11 @@ interface cacheTextureItem {
   custom?: Record<string, Texture[]>
 }
 
+export interface MetaObject extends Object3D {
+  itemType: string;
+  handleClick?: () => void
+}
+
 class MetaEngine {
   container: Element
   width: number
@@ -187,7 +192,7 @@ class MetaEngine {
 
       return canvas
     }
-    function createL(color) {
+    function createL(color: string) {
       console.log("colorcolor", color)
       const intensity = 200
 
@@ -936,12 +941,15 @@ class MetaEngine {
   raycasterConfirm(
     e: any,
     observer: any[]
-  ) {
+  ): MetaObject | null {
     let pickPosition = this.setPickPosition(e)
     const raycaster = new Raycaster()
     raycaster.setFromCamera(pickPosition, this.camera!)
     const intersects = raycaster.intersectObjects(observer, true)
-    if (intersects.length > 0) return intersects[0].object
+    if (intersects.length > 0) {
+      const result = intersects[0].object as MetaObject
+      return result
+    }
     return null
   }
 

@@ -15,6 +15,7 @@ export interface Pen3D extends Pen {
   origin2DInfo: Pen;
   itemType: string;
   typeId?: string;
+  cabinetNumber?: string;
   holes?: Pen3D[];
   //是否是外墙
   exteriorWall?: boolean
@@ -37,7 +38,7 @@ export function categorizeData<T extends string>(
       }
     }
   });
-  let groupNodesData = groupBy(pens, 'itemType');
+  const groupNodesData = groupBy(pens, 'itemType');
   Object.keys(groupNodesData).map((type) => {
     const key = type as RoomItemType
     groupNodesData[type] = groupNodesData[key].map((item: any) => {

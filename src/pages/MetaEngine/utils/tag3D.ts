@@ -11,20 +11,6 @@ export function createLabelDiv(data: any, FC: (d: any) => string) {
   return labelDiv;
 }
 
-export function createCabinetURulter() {
-  var div = document.createElement('div');
-  div.classList.add('tag');
-  let img = document.createElement('img');
-  img.src = `http://127.0.0.1:5500/public/machine-room/textures/u-ruler.png`;
-  img.style.height = '10px';
-  //div元素包装为CSS3模型对象CSS3DObject
-  var label = new CSS3DObject(div);
-  div.style.pointerEvents = 'none';
-  div.appendChild(img);
-  label.scale.set(0.5, 0.5, 0.2);
-  return label; //返回CSS3模型标签
-}
-
 export function createWarningTag(data: any, FC: (d: any) => string, callback: () => void) {
   const labelDiv = createLabelDiv(data, FC);
   labelDiv.style.pointerEvents = 'auto';

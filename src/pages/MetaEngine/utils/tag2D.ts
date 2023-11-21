@@ -31,7 +31,7 @@ export function createLabel(data: any, FC: (d: any) => string) {
 //展示服务器详情label
 export function createDetailLabel(data: any, FC: (d: any) => string, callback: () => void) {
   const labelDiv = createLabelDiv(data, FC);
-  let btn: HTMLButtonElement = labelDiv.querySelector('#tag-link-btn');
+  let btn: HTMLButtonElement | null = labelDiv.querySelector('#tag-link-btn');
   if (btn) {
     btn.style.pointerEvents = 'auto';
     btn.addEventListener('click', function () {
