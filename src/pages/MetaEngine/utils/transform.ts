@@ -56,8 +56,7 @@ export function categorizeData<T extends string>(
 
       let targetWall: Pen3D | null | undefined = find(wall, { id: prev.connectTo });
       let targetDoor = find(door, { id: next.connectTo });
-      if (!targetDoor && !targetDoor) {
-      } else if (targetWall && targetDoor) {
+       if (targetWall && targetDoor) {
         targetWall.holes = targetWall.holes ?? [];
         targetWall.holes.push(targetDoor!);
       } else {

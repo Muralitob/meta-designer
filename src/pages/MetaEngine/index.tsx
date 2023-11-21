@@ -402,47 +402,49 @@ class MetaEngine {
     )
   }
 
-  //创建门
-  createDoor({ width, height, position, rotation }: Pen3D) {
-    let curTexture = this.textureMap.get(`door`)
-    if (!curTexture) {
-      curTexture = [
-        new TextureLoader().load(
-          "https://th.bing.com/th/id/R.87a3596f5afcd4daa03493a35d01e4ce?rik=2sz0myob1F2fAA&riu=http%3a%2f%2fmap.cgahz.com%2fuploads%2fallimg%2f181108%2f1-1Q10QQ6250-L.jpg&ehk=zYM1gp9gezGGptjlTECvWitqPWZQVrLfL1VURNTzsBg%3d&risl=&pid=ImgRaw&r=0"
-        ),
-      ]
-      this.textureMap.set("door", curTexture)
-    }
-    var doorGeometry = new BoxGeometry(width, height, 0.2)
-    var material = new MeshBasicMaterial({
-      color: new Color("#1E50FF"),
-      opacity: 0.4,
-      transparent: true,
-    })
-    let radian = (rotation[1] / Math.PI) * 180
-    //旋转的问题导致需要对位置进行调整
-    position =
-      radian / 90 > 0
-        ? [position[0], position[1], position[2] + width! / 2]
-        : [position[0] - width! / 2, position[1], position[2]]
-    var doorMesh = new Mesh(doorGeometry, material)
-    doorMesh.position.set(...position)
-    doorMesh.rotation.set(...rotation)
-    // 创建门的容器，并将门添加到容器中
-    const doorContainer = new Object3D()
-    doorContainer.add(doorMesh)
-    /**
-     * 设置物体绕Y轴旋转实现动画，
-     * 这里需要注意的是物体旋转是以自身中心进行旋转的，
-     * 所以这里需要把几何体THREE.BoxGeometry平移自身宽度的一半，
-     * 这样物体中心就是THREE.BoxGeometry几何体的边缘。
-     */
-    doorGeometry.translate(width! / 2, 0, 0)
-    // 设置门的初始位置和旋转中心点
-    doorMesh.name = "door"
-    this.scene!.add(doorMesh)
-    return doorMesh
+ //创建门
+ createDoor({ width, height, position, rotation }: Pen3D) {
+  let curTexture = this.textureMap.get(`door`);
+  if (!curTexture) {
+    curTexture = [
+      new TextureLoader().load(
+        'https://th.bing.com/th/id/R.87a3596f5afcd4daa03493a35d01e4ce?rik=2sz0myob1F2fAA&riu=http%3a%2f%2fmap.cgahz.com%2fuploads%2fallimg%2f181108%2f1-1Q10QQ6250-L.jpg&ehk=zYM1gp9gezGGptjlTECvWitqPWZQVrLfL1VURNTzsBg%3d&risl=&pid=ImgRaw&r=0',
+      ),
+    ];
+    this.textureMap.set('door', curTexture);
   }
+  var doorGeometry = new BoxGeometry(width, height, 0.2);
+  var material = new MeshBasicMaterial({
+    color: new Color('#1E50FF'),
+    opacity: 0.4,
+    transparent: true,
+  });
+  let radian = Math.abs((rotation[1] / Math.PI) * 180);
+  console.log('radian', radian);
+  //旋转的问题导致需要对位置进行调整
+  position =
+    radian / 90 > 0
+      ? [position[0], position[1], position[2] - width! / 2]
+      : [position[0] - width! / 2, position[1], position[2]];
+  var doorMesh = new Mesh(doorGeometry, material);
+  doorMesh.position.set(...position);
+  doorMesh.rotation.set(...rotation);
+  // 创建门的容器，并将门添加到容器中
+  const doorContainer = new Object3D();
+  doorContainer.add(doorMesh);
+  /**
+   * 设置物体绕Y轴旋转实现动画，
+   * 这里需要注意的是物体旋转是以自身中心进行旋转的，
+   * 所以这里需要把几何体THREE.BoxGeometry平移自身宽度的一半，
+   * 这样物体中心就是THREE.BoxGeometry几何体的边缘。
+   */
+  doorGeometry.translate(width! / 2, 0, 0);
+  // 设置门的初始位置和旋转中心点
+  doorMesh.name = 'door';
+  this.scene!.add(doorMesh);
+  return doorMesh;
+}
+
 
   //创建墙体
   createWall({ width, height, depth, position, rotation, holes }: Pen3D) {
@@ -459,6 +461,7 @@ class MetaEngine {
     wall.castShadow = true //default is false
     wall.receiveShadow = true //default
     //批量开洞
+    console.log('holes', holes);
     if (holes && holes.length) {
       result.updateMatrix()
       holes.map((cur) => {
