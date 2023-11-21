@@ -1,5 +1,6 @@
 import {
   LeftOutlined,
+  PlayCircleOutlined,
   RightOutlined,
   SaveOutlined,
   ShrinkOutlined,
@@ -8,7 +9,9 @@ import {
 import { Divider, message, Tooltip } from "antd"
 import { useEffect, useState } from "react"
 import "./index.less"
+import { useNavigate } from "react-router-dom"
 export default () => {
+  const navigate = useNavigate()
   const [scale, setScale] = useState(0)
   useEffect(() => {
     const timer = setInterval(() => {
@@ -49,6 +52,10 @@ export default () => {
     localStorage.setItem("metaData", JSON.stringify(data))
   }
 
+  function handleView() {
+    navigate('/room')
+  }
+
   return (
     <div className="app-header">
       <Tooltip title="撤回">
@@ -68,6 +75,9 @@ export default () => {
       <Divider type="vertical" />
       <Tooltip title="保存">
         <SaveOutlined onClick={handleSave} />
+      </Tooltip>
+      <Tooltip title="预览3D效果" >
+      <PlayCircleOutlined onClick={handleView}/>
       </Tooltip>
     </div>
   )

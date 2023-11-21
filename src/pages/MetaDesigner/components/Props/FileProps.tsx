@@ -1,4 +1,5 @@
 import { ColorPicker, Form, InputNumber, Switch } from "antd"
+import { Color } from "antd/es/color-picker/color"
 import { useEffect, useState } from "react"
 export default () => {
   const [options, setOptions] = useState({
@@ -46,7 +47,7 @@ export default () => {
         <Form.Item label={"网格颜色"}>
           <ColorPicker
             value={options.gridColor}
-            onChange={(value) =>
+            onChange={(value: Color) =>
               handleChangeOptions("gridColor", value.toRgbString())
             }
           />

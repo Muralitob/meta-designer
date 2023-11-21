@@ -1,8 +1,13 @@
 import { Pen } from '@meta2d/core';
 import { chunk, find, flatten, groupBy } from 'lodash';
 import DeviceENUM from './DeviceENUM';
-let extra = 0.5;
-export type Pen3D = {
+
+export type RoomItemType = keyof typeof DeviceENUM;
+export type PenValue = Pen3D | null | undefined
+//允许的误差范围
+const extra = 0.5;
+
+export interface Pen3D extends Pen {
   status: string;
   depth: number;
   position: [number, number, number];
@@ -10,14 +15,17 @@ export type Pen3D = {
   origin2DInfo: Pen;
   itemType: string;
   typeId?: string;
-} & Pen;
+  holes?: Pen3D[];
+  //是否是外墙
+  exteriorWall?: boolean
+}
 
 //分类
 export function categorizeData<T extends string>(
-  pens: Pen[] = [],
+  pens: Pen3D[] = [],
   scale: number,
 ): Record<T, Pen3D[]> {
-  let lineData: Pen[] = [];
+  let lineData: Pen3D[] = [];
   pens = pens ?? [];
   pens = pens.filter((item) => {
     if (item.name !== 'line') {
@@ -31,8 +39,9 @@ export function categorizeData<T extends string>(
   });
   let groupNodesData = groupBy(pens, 'itemType');
   Object.keys(groupNodesData).map((type) => {
-    groupNodesData[type] = groupNodesData[type].map((item: any) => {
-      return formatItem(item, type as keyof typeof DeviceENUM, scale);
+    const key = type as RoomItemType
+    groupNodesData[type] = groupNodesData[key].map((item: any) => {
+      return formatItem(item, DeviceENUM[key].height, scale );
     });
   });
   //根据lineData处理墙体上的门数据
@@ -44,11 +53,7 @@ export function categorizeData<T extends string>(
       let prev = anchors![0];
       let next = anchors![1];
 
-      let targetWall:
-        | (Pen & {
-            holes?: Pen[];
-          })
-        | undefined = find(wall, { id: prev.connectTo });
+      let targetWall: Pen3D | null | undefined = find(wall, { id: prev.connectTo });
       let targetDoor = find(door, { id: next.connectTo });
       if (!targetDoor && !targetDoor) {
       } else if (targetWall && targetDoor) {
@@ -56,7 +61,7 @@ export function categorizeData<T extends string>(
         targetWall.holes.push(targetDoor!);
       } else {
         targetWall = find(wall, { id: next.connectTo });
-        let targetDoor = find(door, { id: prev.connectTo });
+        const targetDoor = find(door, { id: prev.connectTo });
         targetWall!.holes = targetWall!.holes ?? [];
         targetWall!.holes.push(targetDoor!);
       }
@@ -67,9 +72,9 @@ export function categorizeData<T extends string>(
 }
 
 //格式化-从2D转换成3D需要的数据
-export function formatItem(item: Pen3D, type: keyof typeof DeviceENUM, scale: number) {
+export function formatItem(item: Pen3D, height: number, scale: number, ) {
   item.origin2DInfo = { ...item };
-  item.rotation = [0, ((item.rotate || 0) / 180) * Math.PI, 0];
+  item.rotation = [0, -((item.rotate || 0) / 180) * Math.PI, 0];
   //meta2d的xywh按scale动态变化的，默认需要100%的数据
   item.x = item.x! / scale;
   item.y = item.y! / scale;
@@ -77,33 +82,33 @@ export function formatItem(item: Pen3D, type: keyof typeof DeviceENUM, scale: nu
   item.height = item.height! / scale;
   item.position = [
     item.x! / 100 + item.width! / 100 / 2,
-    DeviceENUM[type].height / 2 + 0.005,
+    height / 2 + 0.005,
     item.y! / 100 + item.height! / 100 / 2,
   ];
   item.status = 'resolved';
   item.depth = item.height! / 100;
-  item.height = DeviceENUM[type].height;
+  item.height = height;
   item.width = item.width! / 100;
   return item;
 }
 
-export function getRoomPath(wallData: any[]) {
-  let path: any[] = [];
+export function getRoomPath(wallData: Pen3D[]) {
+  let path: [number, number][] = [];
   wallData.map((wall) => {
     if (wall.exteriorWall) {
+      const width = wall?.width || 0
+      const position = wall.position
       if (wall.rotation[1] == 0) {
-        path.push([-wall.width / 2 + wall.position[0], wall.position[2]]);
-        path.push([wall.width / 2 + wall.position[0], wall.position[2]]);
+        path.push([-width / 2 + position[0], position[2]]);
+        path.push([width / 2 + position[0], position[2]]);
       } else {
-        path.push([wall.position[0], wall.width / 2 + wall.position[2]]);
-        path.push([wall.position[0], -wall.width / 2 + wall.position[2]]);
+        path.push([position[0], width / 2 + position[2]]);
+        path.push([position[0], -width / 2 + position[2]]);
       }
     }
   });
-
   //消除点偏移的影响
   //2. 根据点数据排序,顺序由入栈的第一面墙的第二个点决定
-  //消除点偏移的影响
   let chunked = chunk(path, 2);
   let chunked2 = chunk(path, 2);
   let adjustedChunked = [chunked[0]];
@@ -171,7 +176,8 @@ export function getRoomPath(wallData: any[]) {
   }
   return path;
 }
-export function swapXY(i: number, path: [number, number][]) {
+
+function swapXY(i: number, path: [number, number][]) {
   path[i] = path[i - 1];
   const [currentX, currentY] = path[i];
   const [nextX, nextY] = path[i + 1];
@@ -196,7 +202,7 @@ export function checkClosePoint(p1: [number, number], p2: [number, number]) {
   return false;
 }
 
-export function calculateCenterPoint(points) {
+export function calculateCenterPoint(points: [number, number][]) {
   const sumX = points.reduce((sum, point) => sum + point[0], 0);
   const sumY = points.reduce((sum, point) => sum + point[1], 0);
   const centerX = sumX / points.length;

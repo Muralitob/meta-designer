@@ -124,7 +124,7 @@ export default () => {
                     min={1}
                     max={20}
                     step={0.1}
-                    onChange={(value) => changeValue("lightStength", value)}
+                    onChange={(value: number) => changeValue("lightStength", value)}
                     value={
                       typeof pen.lightStength === "number"
                         ? pen.lightStength
