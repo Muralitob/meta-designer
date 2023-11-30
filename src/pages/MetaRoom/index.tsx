@@ -24,12 +24,11 @@ function MetaRoom() {
   const roomRef = useRef<MetaEngine | null>(null)
   const [roomData] = useState(() => {
     let localData = localStorage.getItem("metaData")
-    const roomValue: Meta2dData = (localData ? JSON.parse(localData) : {pens: [], scale: 1})
-    const pens = roomValue['pens'] as Pen3D[]
-    let result = categorizeData<RoomItemType>(
-      pens,
-      roomValue.scale,
-    );
+    const roomValue: Meta2dData = localData
+      ? JSON.parse(localData)
+      : { pens: [], scale: 1 }
+    const pens = roomValue["pens"] as Pen3D[]
+    let result = categorizeData<RoomItemType>(pens, roomValue.scale)
     return result
   })
   useEffect(() => {
@@ -47,7 +46,24 @@ function MetaRoom() {
     }
     /**创建无反馈的模型部分 */
     if (roomData.wall) {
-      room.createRoomWall(roomData.wall)
+      const { doorsResult } = room.createRoomWall(roomData.wall)
+      console.log("doorsResult", doorsResult)
+      doorsResult.map((item) => {
+        item.handleClick = () => {
+          new TWEEN.Tween({ rotate: 0 })
+            .to(
+              {
+                rotate: 1,
+              },
+              200
+            )
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .onUpdate(function (obj) {
+              item.rotation.y = -(Math.PI / 3) * obj.rotate
+            })
+            .start()
+        }
+      })
       let path = getRoomPath(roomData.wall)
       room.createFloor(20, 20, path)
       const centerPoint = calculateCenterPoint(path)
@@ -93,9 +109,9 @@ function MetaRoom() {
 
   useEffect(() => {
     if (roomRef.current) {
-      roomRef.current.animate();
+      roomRef.current.animate()
     }
-  }, [roomRef.current]);
+  }, [roomRef.current])
 
   function onWindowResize() {
     const room = roomRef.current
@@ -146,8 +162,7 @@ function MetaRoom() {
     }
   }
 
-  function textureLoadSuccess() {
-  }
+  function textureLoadSuccess() {}
   return (
     <div className="meta-room">
       <canvas ref={canvasRef} id="canvas"></canvas>

@@ -60,6 +60,11 @@ export interface MetaObject extends Object3D {
   handleClick?: () => void
 }
 
+export interface MetaMesh extends Mesh {
+  itemType?: string;
+  handleClick?: () => void
+}
+
 class MetaEngine {
   container: Element
   width: number
@@ -389,6 +394,8 @@ class MetaEngine {
 
   //创建房屋墙壁
   createRoomWall(wallData: Record<string, any>) {
+    const doorsResult: Pen3D[] = []
+    const wallResult: Pen3D[] = []
     wallData.forEach(
       (
         data: Pen3D & {
@@ -396,10 +403,16 @@ class MetaEngine {
           holes: Pen3D[]
         }
       ) => {
-        const wall = this.createWall(data)
+        const { wall, doors } = this.createWall(data)
+        wallResult.push(wall)
+        doorsResult.push(...doors)
         this.scene!.add(wall)
       }
     )
+    return {
+      doorsResult,
+      wallResult,
+    } as const
   }
 
  //创建门
@@ -461,7 +474,8 @@ class MetaEngine {
     wall.castShadow = true //default is false
     wall.receiveShadow = true //default
     //批量开洞
-    console.log('holes', holes);
+    const doors: MetaMesh[] = []
+    let wallItem: MetaMesh = wall
     if (holes && holes.length) {
       result.updateMatrix()
       holes.map((cur) => {
@@ -469,13 +483,17 @@ class MetaEngine {
         sphere.position.set(...cur.position)
         sphere.rotation.set(...cur.rotation)
         let door = this.createDoor(cur)
+        doors.push(door)
         sphere.updateMatrix()
         result = CSG.subtract(result, sphere)
       })
-      return result
+      wallItem = result 
     }
     wall.name = "wall-" + Math.random()
-    return wall
+    return {
+      wall: wallItem,
+      doors,
+    }
   }
 
   toggleMeshShow(children: (Mesh | CSS2DObject | CSS3DObject)[], visible: boolean, time: number = 1000) {
