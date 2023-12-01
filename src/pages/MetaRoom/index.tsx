@@ -10,6 +10,7 @@ import {
 import { Object3D, Vector3 } from "three"
 import * as TWEEN from "@tweenjs/tween.js"
 import { Meta2dData } from "@meta2d/core"
+import { openDoor } from "../MetaEngine/utils/preset-animation"
 
 const nonInteractiveModel = [
   "ups",
@@ -47,21 +48,9 @@ function MetaRoom() {
     /**创建无反馈的模型部分 */
     if (roomData.wall) {
       const { doorsResult } = room.createRoomWall(roomData.wall)
-      console.log("doorsResult", doorsResult)
       doorsResult.map((item) => {
         item.handleClick = () => {
-          new TWEEN.Tween({ rotate: 0 })
-            .to(
-              {
-                rotate: 1,
-              },
-              200
-            )
-            .easing(TWEEN.Easing.Quadratic.InOut)
-            .onUpdate(function (obj) {
-              item.rotation.y = -(Math.PI / 3) * obj.rotate
-            })
-            .start()
+          openDoor(item).start()
         }
       })
       let path = getRoomPath(roomData.wall)

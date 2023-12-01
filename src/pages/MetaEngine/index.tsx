@@ -394,14 +394,11 @@ class MetaEngine {
 
   //创建房屋墙壁
   createRoomWall(wallData: Record<string, any>) {
-    const doorsResult: Pen3D[] = []
-    const wallResult: Pen3D[] = []
+    const doorsResult: MetaMesh[] = []
+    const wallResult: MetaMesh[] = []
     wallData.forEach(
       (
-        data: Pen3D & {
-          depth: number
-          holes: Pen3D[]
-        }
+        data: Pen3D
       ) => {
         const { wall, doors } = this.createWall(data)
         wallResult.push(wall)
@@ -432,13 +429,18 @@ class MetaEngine {
     opacity: 0.4,
     transparent: true,
   });
-  let radian = Math.abs((rotation[1] / Math.PI) * 180);
-  console.log('radian', radian);
+  let radian = 0
+  let cacheRadian = Math.abs((rotation[1] / Math.PI) * 180)
+  if(cacheRadian >= 180) {
+    radian = 180 - cacheRadian
+  }else {
+    radian = cacheRadian
+  }
   //旋转的问题导致需要对位置进行调整
   position =
-    radian / 90 > 0
-      ? [position[0], position[1], position[2] - width! / 2]
-      : [position[0] - width! / 2, position[1], position[2]];
+    radian != 0
+      ? [position[0], position[1],radian < 0 ?  position[2] + width! / 2 : position[2] - width! / 2]
+      : [cacheRadian == 0 ? position[0] - width! / 2 : position[0] + width! / 2, position[1], position[2]];
   var doorMesh = new Mesh(doorGeometry, material);
   doorMesh.position.set(...position);
   doorMesh.rotation.set(...rotation);
