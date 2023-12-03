@@ -18,4 +18,4 @@
 ```
 
 ### 编辑器的使用规则
-//TODO
+https://www.yuque.com/xuzhongjia/zu68qz/bsd3m7dyy58k3lo1?singleDoc# 《MetaDesigner使用文档》
