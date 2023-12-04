@@ -53,6 +53,8 @@ export default () => {
   }
 
   function handleView() {
+    let data = window.meta2d.data()
+    localStorage.setItem("metaData", JSON.stringify(data))
     navigate('/room')
   }
 
