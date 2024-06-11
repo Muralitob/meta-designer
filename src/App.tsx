@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom"
 import MetaDesigner from "./pages/MetaDesigner"
+import DashBoard from './pages/DashBoard'
 import MetaRoom from "./pages/MetaRoom"
 
 const router = createBrowserRouter([
@@ -12,8 +13,12 @@ const router = createBrowserRouter([
     Component: MetaRoom,
   },
   {
+    path: '/dashboard',
+    Component: DashBoard,
+  },
+  {
     path: '/',
-    element: <Navigate to="/desginer" />,
+    element: <Navigate to="/dashboard" />,
   }
 ])
 
