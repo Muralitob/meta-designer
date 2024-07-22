@@ -95,6 +95,7 @@ export function formatItem(item: Pen3D, height: number, scale: number, ) {
 export function getRoomPath(wallData: Pen3D[]) {
   let path: [number, number][] = [];
   wallData.map((wall) => {
+    console.log('wallDatawallData', wallData)
     if (wall.exteriorWall) {
       const width = wall?.width || 0
       const position = wall.position
@@ -109,6 +110,7 @@ export function getRoomPath(wallData: Pen3D[]) {
   });
   //消除点偏移的影响
   //2. 根据点数据排序,顺序由入栈的第一面墙的第二个点决定
+  console.log('pathpath', path)
   let chunked = chunk(path, 2);
   let chunked2 = chunk(path, 2);
   let adjustedChunked = [chunked[0]];

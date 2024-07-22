@@ -1,0 +1,34 @@
+.loader-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    transition: 0.3s;
+  }
+  
+  .loading-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .loading {
+    color: white;
+    font-size: 1.875rem;
+    letter-spacing: 0.1em;
+  }
+  
+  .loading span {
+    animation: blur 1s calc(var(--i) / 5 * 1s) alternate infinite;
+  }
+  
+  @keyframes blur {
+    to {
+      filter: blur(2px);
+    }
+  }
+  

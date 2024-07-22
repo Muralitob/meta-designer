@@ -1,0 +1,30 @@
+.graphics {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 12px;
+  background-color: #fff;
+  border-right: 1px solid #ccc;
+}
+
+.graphic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px;
+  text-align: center;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    border: 1px solid blue;
+  }
+}
+
+.group-list {
+  display: grid;
+  grid-row-gap: 12px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  padding: 20px 4px;
+  background-color: var(--color-background-active);
+}

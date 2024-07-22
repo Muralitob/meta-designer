@@ -24,7 +24,7 @@ function MetaRoom() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const roomRef = useRef<MetaEngine | null>(null)
   const [roomData] = useState(() => {
-    let localData = localStorage.getItem("metaData")
+    let localData = localStorage.getItem("mroom")
     const roomValue: Meta2dData = localData
       ? JSON.parse(localData)
       : { pens: [], scale: 1 }
@@ -53,6 +53,7 @@ function MetaRoom() {
           openDoor(item).start()
         }
       })
+      console.log('roomData', roomData)
       let path = getRoomPath(roomData.wall)
       room.createFloor(20, 20, path)
       const centerPoint = calculateCenterPoint(path)

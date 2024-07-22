@@ -1,7 +1,9 @@
 import "./index.less";
 import { themeChange } from "theme-change";
 import { useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
 export default () => {
+  const navigate = useNavigate()
   useEffect(() => {
     themeChange(false);
   }, []);
@@ -44,7 +46,9 @@ export default () => {
                 <div className="max-w-md">
                   <h1 className="text-5xl font-bold">机房设计</h1>
                   <p className="py-6">通过拖拽元素，快速搭建机房内部构造</p>
-                  <button className="btn btn-primary">开始体验</button>
+                  <button className="btn btn-primary" onClick={() => {
+                    navigate('/room-desginer')
+                  }}>开始体验</button>
                 </div>
               </div>
             </div>
