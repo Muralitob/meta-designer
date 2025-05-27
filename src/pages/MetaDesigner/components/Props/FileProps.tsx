@@ -1,7 +1,7 @@
 import { ColorPicker, Form, InputNumber, Switch } from "antd"
 import { Color } from "antd/es/color-picker/color"
 import { useEffect, useState } from "react"
-export default () => {
+export default function FileProps(){
   const [options, setOptions] = useState({
     grid: false,
     gridSize: 20,
@@ -22,6 +22,7 @@ export default () => {
   useEffect(() => {
     const meta2d = window.meta2d
     if (meta2d) {
+      console.log(meta2d)
       meta2d.setOptions(options)
       meta2d.store.patchFlagsTop = true
       meta2d.render()

@@ -1,6 +1,6 @@
 import { Pen } from '@meta2d/core';
 import { Dropdown, DropDownProps, MenuProps } from 'antd';
-import { PropsWithChildren, useMemo } from 'react';
+import { PropsWithChildren, useEffect, useMemo, useState } from 'react';
 import { ItemType } from 'rc-menu/lib/interface';
 
 interface MetaMenuProps extends PropsWithChildren<DropDownProps> {
@@ -10,6 +10,7 @@ interface MetaMenuProps extends PropsWithChildren<DropDownProps> {
 
 function MetaMenu(props: MetaMenuProps) {
   const { actived, setActived, ...restProps } = props;
+  const [drawing, setDrawing] = useState(false);
   const meta = window.meta2d??{store: {
     histories: [],
     historyIndex: -1,
@@ -134,6 +135,7 @@ function MetaMenu(props: MetaMenuProps) {
     ];
     return items;
   }, [props.actived]);
+  
   const onClick: MenuProps['onClick'] = ({ key }) => {
     const meta2d = window.meta2d;
     if (key == 'delete') {
@@ -208,6 +210,15 @@ function MetaMenu(props: MetaMenuProps) {
         break;
     }
   };
+  
+  useEffect(() => {
+   setTimeout(() => {
+    window?.meta2d?.on('draw', (data) => {
+      setDrawing(!!data.name);
+    })
+   })
+  }, [])
+
 
   return (
     <Dropdown
@@ -215,7 +226,7 @@ function MetaMenu(props: MetaMenuProps) {
         width: 120,
       }}
       menu={{ items: renderMenus, onClick }}
-      trigger={['contextMenu']}
+      trigger={drawing ? [] : ['contextMenu']}
       {...restProps}
     ></Dropdown>
   );

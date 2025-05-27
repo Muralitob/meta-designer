@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react"
 import { DeviceRect, linkItemAnchors, nonAnchors } from "../../utils/CustomRect"
 import Menu from "../Menu"
 import { MetaPen } from "../Props/PenProps"
-export default () => {
+export default function View() {
   const cacheActivedRef = useRef<Pen[] | undefined>([])
   const anchorStart = useRef("")
   const [actived, setActived] = useState<Pen[]>([{}])

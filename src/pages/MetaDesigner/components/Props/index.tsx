@@ -4,7 +4,7 @@ import FileProps from './FileProps';
 import './index.less';
 import PenProps from './PenProps';
 
-export default () => {
+export default function Props() {
   const selections = useSelections((state) => state.selections);
   const select = useSelections((state) => state.select);
   useEffect(() => {
@@ -13,9 +13,9 @@ export default () => {
     };
   }, []);
   return (
-    <div className="props f">
+    <div className="props">
       {selections.mode === SelectionMode.File && <FileProps />}
       {selections.mode === SelectionMode.Pen && <PenProps />}
     </div>
   );
-};
+}
